@@ -44,6 +44,9 @@ void main(List<String> arguments) {
     String input;
     if (results['input'] != null) {
       input = results['input'] as String;
+    } else if (results.rest.isNotEmpty) {
+      // Use remaining arguments as input text
+      input = results.rest.join(' ');
     } else {
       // Read from stdin
       input = stdin.readLineSync() ?? '';
@@ -133,7 +136,9 @@ void main(List<String> arguments) {
 
 void showHelp(ArgParser parser) {
   print('Obfuscate - Text obfuscation CLI tool\n');
-  print('Usage: obfuscate [options] [input]');
+  print('Usage: obfuscate [options] <text>');
+  print('   or: obfuscate [options] -i <file>');
+  print('   or: echo "text" | obfuscate [options]');
   print('\nOptions:');
   print(parser.usage);
   print('\nExamples:');
@@ -142,6 +147,7 @@ void showHelp(ArgParser parser) {
   print('  obfuscate -m xor -k 123 "Secret text"');
   print('  obfuscate -m custom -k \'{"a":"x","e":"y"}\' "Hello"');
   print('  echo "Hello" | obfuscate -m reverse');
+  print('  obfuscate -m base64 -i input.txt -o output.txt');
 }
 
 Map<String, String> parseCustomMapping(String jsonStr) {
