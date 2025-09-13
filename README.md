@@ -4,7 +4,7 @@
 
 Obfuscate your text data using multiple obfuscation methods including custom character mapping, classic ciphers, and encoding techniques.
 
-## 🚀 Features
+## Features
 
 - **🖥️ CLI Tool**: Ready-to-use command-line interface for quick text obfuscation
 - **📚 Dart Library**: Integrate seamlessly into your Dart/Flutter projects
