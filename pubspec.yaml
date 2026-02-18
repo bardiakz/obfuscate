@@ -9,7 +9,7 @@ executables:
   obfuscate:
 
 environment:
-  sdk: ^3.9.2
+  sdk: ^3.11.0
 
 # Add regular dependencies here.
 dependencies:
