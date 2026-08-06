@@ -1,25 +1,37 @@
 # Obfuscate
 
-🔐 **text obfuscation toolkit** with both CLI and library support.
+Text obfuscation toolkit for Dart — CLI and library.
 
-Obfuscate your text data using multiple obfuscation methods including custom character mapping, classic ciphers, and encoding techniques.
+> Obfuscation, not encryption. Base64/ROT13/XOR/reverse/map ciphers give no real confidentiality — don't use this for anything that actually needs to stay secret.
 
 ## Features
 
-- **🖥️ CLI Tool**: Ready-to-use command-line interface for quick text obfuscation
-- **📚 Dart Library**: Integrate seamlessly into your Dart/Flutter projects
-- **🔀 Multiple Methods**:
-    - **Base64 Encoding**: Standard Base64 text encoding/decoding
-    - **ROT13 Cipher**: Classic letter substitution cipher
-    - **XOR Cipher**: Bitwise XOR encryption with custom keys
-    - **String Reversal**: Simple character order reversal
-    - **Custom Mapping**: Define your own character substitution rules
-- **⚙️ Flexible Options**:
-    - Preserve original character case
-    - Handle unmapped characters gracefully
-    - Support for stdin/stdout and file I/O
-    - JSON-based custom mapping definitions
+- **CLI tool** for quick obfuscation from the command line
+- **Dart library** to integrate into your own projects
+- **Methods**: Base64, ROT13, XOR (byte-safe), string reversal, character-substitution maps, word-token maps
+- **`validateMap()`** catches bad maps (collisions, empty values, risky characters) before you use them
+- **`NibbleCodec`** applies any codec safely to raw bytes, not just text
 
-### Global CLI Installation:
+## Install
+
 ```bash
 dart pub global activate obfuscate
+```
+
+## Usage
+
+```dart
+import 'package:obfuscate/obfuscate.dart';
+
+const codec = Base64ObfuscationCodec();
+final encoded = codec.obfuscate('Hello, World!');
+final decoded = codec.deobfuscate(encoded);
+
+// character map
+final substitution = SubstitutionCodec({'h': 'x', 'e': 'y'});
+
+// word map
+final tokens = TokenSubstitutionCodec({'h': 'house', 'e': 'energy'});
+```
+
+Upgrading from an earlier version? The old `Obfuscate.obfuscateBase64()`-style static methods still work — deprecated, not removed, no code changes needed. See `CHANGELOG.md`.
