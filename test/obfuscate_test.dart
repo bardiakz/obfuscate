@@ -4,9 +4,6 @@ import 'dart:typed_data';
 import 'package:obfuscate/obfuscate.dart';
 import 'package:test/test.dart';
 
-// A deliberately-broken copy of your real FA1 map (uppercase block
-// only, trimmed for the test) reproducing the exact collision found
-// in the .env file: both 'Q' and '9' map to 'ز'.
 const brokenFa1Sample = {
   'A': 'ه', 'B': 'و', 'Q': 'ز',
   '9': 'ز', // <- collides with 'Q' above

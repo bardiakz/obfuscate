@@ -16,13 +16,7 @@
 /// that real users may still be holding onto (old QR codes, saved
 /// messages, etc). New code should use [SubstitutionCodec] or
 /// [TokenSubstitutionCodec] instead.
-///
-/// If you also shipped the old `XorCodec`/XOR obfuscation logic (raw
-/// UTF-16 code-unit XOR, not the byte+base64 version in
-/// `codecs/xor_codec.dart`), freeze a copy of *that* old function
-/// here too before deleting it from wherever it currently lives —
-/// anyone who obfuscated data with the old XOR key/logic needs a way
-/// to decode it going forward.
+
 class LegacyMapCodec {
   static String obfuscate(
     String text,

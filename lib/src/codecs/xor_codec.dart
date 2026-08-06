@@ -8,16 +8,15 @@ import '../obfuscation_method.dart';
 /// — trivially reversible by brute-forcing 256 key values, provided
 /// for obfuscation only, never for confidentiality.
 ///
-/// IMPORTANT — wire format change from the original implementation:
+/// IMPORTANT — wire format change from the legacy implementation:
 /// this version XORs UTF-8 *bytes* and represents the result as
 /// base64, not raw UTF-16 code units turned directly into a String.
-/// The original approach could produce invalid lone-surrogate
+/// The legacy approach could produce invalid lone-surrogate
 /// sequences for some key/input combinations, which then failed or
 /// corrupted when written as UTF-8 (e.g. via `File.writeAsStringSync`
 /// or `print`). If you have existing data encoded with the old XOR
-/// logic, keep decoding it with `LegacyMapCodec`-style logic (or your
-/// own frozen copy of the old XOR function) — do not point old data
-/// at this class.
+/// logic, keep decoding it with `LegacyMapCodec`-style logic do not point old data at this class.
+
 class XorCodec implements ObfuscationMethod {
   final int key;
 

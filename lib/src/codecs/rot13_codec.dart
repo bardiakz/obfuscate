@@ -2,9 +2,9 @@ import '../obfuscation_method.dart';
 
 /// Classic ROT13 substitution on ASCII letters A-Z/a-z. Self-inverse
 /// (obfuscate and deobfuscate are the same operation). Non-alphabetic
-/// characters, including all Persian characters, pass through
+/// characters, including all Persian/Arabic characters, pass through
 /// unchanged — this is expected behavior, not a bug: a ROT13 pass on
-/// Persian text is a no-op.
+/// Persian/Arabic text is a no-op.
 class Rot13Codec implements ObfuscationMethod {
   const Rot13Codec();
 

@@ -21,10 +21,6 @@ import 'legacy_map_codec.dart';
 /// New code should NOT use this class — use the codec classes
 /// instead: [Base64ObfuscationCodec], [Rot13Codec], [XorCodec],
 /// [ReverseCodec], [SubstitutionCodec], [TokenSubstitutionCodec].
-///
-/// This class will be removed in a future major version. Nothing in
-/// it will change behavior underneath you in a minor/patch release —
-/// migrate at your own pace.
 @Deprecated(
   'Use the codec classes instead (SubstitutionCodec, '
   'Base64ObfuscationCodec, Rot13Codec, XorCodec, ReverseCodec, '
