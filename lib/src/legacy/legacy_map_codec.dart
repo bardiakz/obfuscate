@@ -1,7 +1,30 @@
-import 'dart:convert';
+// ignore_for_file: avoid_print
 
-class Obfuscate {
-  static String obfuscateWithMap(
+/// FROZEN legacy implementation — DO NOT MODIFY THIS FILE.
+///
+/// This is a byte-for-byte copy of the original
+/// `Obfuscate.obfuscateWithMap` / `deobfuscateWithMap` logic from
+/// obfuscate 0.0.1, including its known quirks (inserting a delimiter
+/// space between every output unit, and silently keeping only one
+/// side of a duplicate-value collision in the reverse map). It exists
+/// solely so that data obfuscated by earlier versions of this
+/// library — or by qrypt's InputHandler using the old API — can still
+/// be decoded correctly.
+///
+/// Do NOT use this for new code, and do NOT "fix" the quirks below:
+/// doing so would silently break decoding of already-obfuscated data
+/// that real users may still be holding onto (old QR codes, saved
+/// messages, etc). New code should use [SubstitutionCodec] or
+/// [TokenSubstitutionCodec] instead.
+///
+/// If you also shipped the old `XorCodec`/XOR obfuscation logic (raw
+/// UTF-16 code-unit XOR, not the byte+base64 version in
+/// `codecs/xor_codec.dart`), freeze a copy of *that* old function
+/// here too before deleting it from wherever it currently lives —
+/// anyone who obfuscated data with the old XOR key/logic needs a way
+/// to decode it going forward.
+class LegacyMapCodec {
+  static String obfuscate(
     String text,
     Map<String, String> obfuscationMap, {
     bool preserveUnmapped = false,
@@ -64,10 +87,7 @@ class Obfuscate {
     }
   }
 
-  static String deobfuscateWithMap(
-    String text,
-    Map<String, String> obfuscationMap,
-  ) {
+  static String deobfuscate(String text, Map<String, String> obfuscationMap) {
     // Create reverse mapping with lowered keys for case-insensitivity
     Map<String, String> reverseMap = {};
     obfuscationMap.forEach((key, value) {
@@ -93,69 +113,4 @@ class Obfuscate {
         .join(''); // Join without spaces
     return deobfuscatedContent;
   }
-
-  // Base64 obfuscation
-  static String obfuscateBase64(String text) {
-    final bytes = utf8.encode(text);
-    return base64.encode(bytes);
-  }
-
-  static String deobfuscateBase64(String encodedText) {
-    try {
-      final bytes = base64.decode(encodedText);
-      return utf8.decode(bytes);
-    } catch (e) {
-      return encodedText; // Return original if decoding fails
-    }
-  }
-
-  // ROT13 obfuscation
-  static String obfuscateROT13(String text) {
-    return text
-        .split('')
-        .map((char) {
-          if (char.codeUnitAt(0) >= 65 && char.codeUnitAt(0) <= 90) {
-            // Uppercase A-Z
-            return String.fromCharCode(
-              ((char.codeUnitAt(0) - 65 + 13) % 26) + 65,
-            );
-          } else if (char.codeUnitAt(0) >= 97 && char.codeUnitAt(0) <= 122) {
-            // Lowercase a-z
-            return String.fromCharCode(
-              ((char.codeUnitAt(0) - 97 + 13) % 26) + 97,
-            );
-          }
-          return char; // Non-alphabetic characters unchanged
-        })
-        .join('');
-  }
-
-  static String deobfuscateROT13(String text) {
-    return obfuscateROT13(text);
-  }
-
-  //XOR obfuscation with key
-  static String obfuscateXOR(String text, int key) {
-    return text
-        .split('')
-        .map((char) {
-          return String.fromCharCode(char.codeUnitAt(0) ^ key);
-        })
-        .join('');
-  }
-
-  static String deobfuscateXOR(String text, int key) {
-    return obfuscateXOR(text, key);
-  }
-
-  // Reverse string obfuscation
-  static String obfuscateReverse(String text) {
-    return text.split('').reversed.join('');
-  }
-
-  static String deobfuscateReverse(String text) {
-    return obfuscateReverse(text);
-  }
 }
-
-void main(List<String> arguments) {}
