@@ -1,6 +1,6 @@
 name: obfuscate
 description: Dart CLI tool and library for text obfuscation and deobfuscation using custom mapping, Base64, ROT13, XOR, and string reversal.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/bardiakz/obfuscate
 repository: https://github.com/bardiakz/obfuscate
 
