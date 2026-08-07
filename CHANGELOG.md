@@ -1,3 +1,6 @@
+## 1.0.1
+- resolved Pub analyzer warning
+
 ## 1.0.0
 
 Redesigned the codec architecture.Old data and old code both keep working:
