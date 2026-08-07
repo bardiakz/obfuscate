@@ -16,7 +16,6 @@
 /// that real users may still be holding onto (old QR codes, saved
 /// messages, etc). New code should use [SubstitutionCodec] or
 /// [TokenSubstitutionCodec] instead.
-
 class LegacyMapCodec {
   static String obfuscate(
     String text,
